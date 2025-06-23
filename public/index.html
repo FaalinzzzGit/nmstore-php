@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NMStore - Hijab & Fashion Wanita</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
+      }
+      .image-4-5 {
+        padding-bottom: 125%;
+        position: relative;
+        overflow: hidden;
+      }
+      .image-4-5 img,
+      .image-4-5 video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* Animasi untuk teks hero */
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in-down {
+        animation: fadeInDown 0.8s ease-out forwards;
+      }
+      /* Spinner sederhana */
+      .loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #ec4899; /* Pink */
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <header
+      class="bg-white shadow-md py-4 px-6 md:px-12 fixed w-full top-0 z-50"
+    >
+      <div class="container mx-auto flex justify-between items-center">
+        <a href="#" class="text-2xl md:text-3xl font-bold text-pink-600"
+          >NMStore</a
+        >
+        <nav class="hidden md:flex space-x-6 text-lg">
+          <a
+            href="#home"
+            class="text-gray-700 hover:text-pink-600 transition duration-300"
+            >Home</a
+          >
+          <a
+            href="#products"
+            class="text-gray-700 hover:text-pink-600 transition duration-300"
+            >Produk</a
+          >
+          <a
+            href="#why-us"
+            class="text-gray-700 hover:text-pink-600 transition duration-300"
+            >Kenapa Kami</a
+          >
+          <a
+            href="#contact"
+            class="text-gray-700 hover:text-pink-600 transition duration-300"
+            >Kontak</a
+          >
+        </nav>
+        <button
+          id="hamburger-menu"
+          class="md:hidden text-gray-700 hover:text-pink-600 focus:outline-none"
+        >
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+      <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 text-center">
+        <a
+          href="#home"
+          class="block py-2 text-gray-700 hover:bg-pink-100 transition duration-300 rounded"
+          >Home</a
+        >
+        <a
+          href="#products"
+          class="block py-2 text-gray-700 hover:bg-pink-100 transition duration-300 rounded"
+          >Produk</a
+        >
+        <a
+          href="#why-us"
+          class="block py-2 text-gray-700 hover:bg-pink-100 transition duration-300 rounded"
+          >Kenapa Kami</a
+        >
+        <a
+          href="#contact"
+          class="block py-2 text-gray-700 hover:bg-pink-100 transition duration-300 rounded"
+          >Kontak</a
+        >
+      </div>
+    </header>
+
+    <main class="pt-24">
+      <section
+        id="home"
+        class="py-16 md:py-24 bg-gradient-to-r from-pink-50 to-purple-50 text-center"
+      >
+        <div class="container mx-auto px-6">
+          <img
+            src="/images/nmstore-logo.png"
+            alt="NMStore Logo"
+            class="mx-auto w-32 h-32 md:w-48 md:h-48 rounded-full shadow-lg mb-6 animate-fade-in-down"
+            style="animation-delay: 0.2s"
+          />
+          <h1
+            class="text-4xl md:text-5xl font-extrabold text-pink-700 mb-4 animate-fade-in-down"
+            style="animation-delay: 0.4s"
+          >
+            Selamat Datang di NMStore!
+          </h1>
+          <p
+            class="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed animate-fade-in-down"
+            style="animation-delay: 0.6s"
+          >
+            Temukan koleksi hijab dan fashion wanita terbaru yang modis, nyaman,
+            dan berkualitas tinggi. NMStore adalah pilihan terbaik Anda untuk
+            tampil cantik dan syar'i setiap saat.
+          </p>
+        </div>
+      </section>
+
+      <section id="products" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-6">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12"
+          >
+            Produk Unggulan Kami
+          </h2>
+          <div
+            id="product-cards-container"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+          >
+            <div class="col-span-full text-center">
+              <div class="loader"></div>
+              <p class="text-gray-600">Memuat produk...</p>
+            </div>
+          </div>
+          <div class="text-center mt-12">
+            <a
+              href="/products.html"
+              class="inline-block bg-pink-600 text-white font-semibold py-3 px-8 rounded-full hover:bg-pink-700 transition duration-300 text-lg shadow-lg"
+              >Lihat Semua Produk</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="why-us"
+        class="py-16 md:py-24 bg-gradient-to-l from-pink-50 to-purple-50"
+      >
+        <div class="container mx-auto px-6">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12"
+          >
+            Mengapa Memilih Kami?
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div
+              class="bg-white p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition duration-300"
+            >
+              <i class="fas fa-gem text-5xl text-pink-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                Kualitas Premium
+              </h3>
+              <p class="text-gray-600">
+                Kami hanya menyediakan produk dengan bahan terbaik dan jahitan
+                rapi.
+              </p>
+            </div>
+            <div
+              class="bg-white p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition duration-300"
+            >
+              <i class="fas fa-palette text-5xl text-purple-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                Desain Terbaru
+              </h3>
+              <p class="text-gray-600">
+                Ikuti tren fashion terkini dengan koleksi kami yang selalu
+                update.
+              </p>
+            </div>
+            <div
+              class="bg-white p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition duration-300"
+            >
+              <i
+                class="fas fa-hand-holding-heart text-5xl text-green-500 mb-4"
+              ></i>
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                Pelayanan Ramah
+              </h3>
+              <p class="text-gray-600">
+                Tim kami siap membantu Anda dengan sepenuh hati.
+              </p>
+            </div>
+            <div
+              class="bg-white p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition duration-300"
+            >
+              <i class="fas fa-shipping-fast text-5xl text-blue-500 mb-4"></i>
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                Pengiriman Cepat
+              </h3>
+              <p class="text-gray-600">
+                Pesanan Anda akan sampai dengan aman dan cepat di tangan Anda.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-6 text-center">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">
+            Hubungi Kami
+          </h2>
+          <div class="flex flex-wrap justify-center gap-8">
+            <a
+              href="https://wa.me/6281333455526"
+              target="_blank"
+              class="flex items-center space-x-4 bg-green-500 text-white py-4 px-8 rounded-full shadow-lg hover:bg-green-600 transition duration-300 group"
+            >
+              <i
+                class="fab fa-whatsapp text-3xl group-hover:scale-110 transform transition"
+              ></i>
+              <span class="text-xl font-semibold">+62 813-3345-5526</span>
+            </a>
+            <a
+              href="https://instagram.com/nurany_maulidha"
+              target="_blank"
+              class="flex items-center space-x-4 bg-pink-500 text-white py-4 px-8 rounded-full shadow-lg hover:bg-pink-600 transition duration-300 group"
+            >
+              <i
+                class="fab fa-instagram text-3xl group-hover:scale-110 transform transition"
+              ></i>
+              <span class="text-xl font-semibold">@nurany_maulidha</span>
+            </a>
+            <a
+              href="mailto:officialnmstore@gmail.com"
+              class="flex items-center space-x-4 bg-blue-500 text-white py-4 px-8 rounded-full shadow-lg hover:bg-blue-600 transition duration-300 group"
+            >
+              <i
+                class="fas fa-envelope text-3xl group-hover:scale-110 transform transition"
+              ></i>
+              <span class="text-xl font-semibold"
+                >officialnmstore@gmail.com</span
+              >
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-10">
+      <div
+        class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left"
+      >
+        <div class="mb-6 md:mb-0">
+          <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="#home"
+                class="hover:text-pink-400 transition duration-300"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="#products"
+                class="hover:text-pink-400 transition duration-300"
+                >Produk</a
+              >
+            </li>
+            <li>
+              <a
+                href="#why-us"
+                class="hover:text-pink-400 transition duration-300"
+                >Kenapa Kami</a
+              >
+            </li>
+            <li>
+              <a
+                href="#contact"
+                class="hover:text-pink-400 transition duration-300"
+                >Kontak</a
+              >
+            </li>
+            <li>
+              <a
+                href="/admin"
+                class="hover:text-pink-400 transition duration-300"
+                >Admin Login</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="text-center">
+          <p>
+            &copy; <span id="current-year"></span> NMStore. All rights reserved.
+          </p>
+          <p class="text-sm mt-2">Dibuat dengan ❤️ untuk fashion Anda.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+
+      const hamburgerMenu = document.getElementById("hamburger-menu");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      hamburgerMenu.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+        });
+      });
+
+      const productCardsContainer = document.getElementById(
+        "product-cards-container"
+      );
+
+      async function fetchProducts() {
+        productCardsContainer.innerHTML = `
+          <div class="col-span-full text-center">
+            <div class="loader"></div>
+            <p class="text-gray-600">Memuat produk...</p>
+          </div>
+        `; // Menampilkan spinner saat memuat
+
+        try {
+          const response = await fetch("/api/products");
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const products = await response.json();
+          displayProducts(products);
+        } catch (error) {
+          console.error("Gagal mengambil produk:", error);
+          productCardsContainer.innerHTML =
+            '<p class="col-span-full text-center text-red-500">Gagal memuat produk. Silakan coba lagi nanti.</p>';
+        }
+      }
+
+      function displayProducts(products) {
+        productCardsContainer.innerHTML = ""; // Bersihkan spinner setelah produk didapat
+
+        if (products.length === 0) {
+          productCardsContainer.innerHTML =
+            '<p class="col-span-full text-center text-gray-600">Belum ada produk yang ditambahkan.</p>';
+          return;
+        }
+
+        products.forEach((product) => {
+          const firstMediaUrl =
+            product.mediaUrls && product.mediaUrls.length > 0
+              ? product.mediaUrls[0]
+              : "/images/placeholder.png";
+
+          const isVideo =
+            firstMediaUrl.endsWith(".mp4") ||
+            firstMediaUrl.endsWith(".webm") ||
+            firstMediaUrl.endsWith(".ogg");
+
+          const productCard = `
+            <a href="product.html?id=${
+              product.id
+            }" class="block bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-102 transition duration-300 group">
+                <div class="image-4-5 bg-gray-200">
+                    ${
+                      isVideo
+                        ? `<video src="${firstMediaUrl}" class="w-full h-full object-cover" muted loop playsinline loading="lazy"></video>`
+                        : `<img src="${firstMediaUrl}" alt="${product.name}" class="w-full h-full object-cover" loading="lazy">`
+                    }
+                </div>
+                <div class="p-5">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 truncate">${
+                      product.name
+                    }</h3>
+                    <p class="text-pink-600 font-bold text-lg">${
+                      product.price
+                    }</p>
+                </div>
+            </a>
+        `;
+          productCardsContainer.insertAdjacentHTML("beforeend", productCard);
+        });
+      }
+
+      fetchProducts();
+    </script>
+  </body>
+</html>

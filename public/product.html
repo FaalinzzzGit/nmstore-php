@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Produk - NMStore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
+      }
+      .image-4-5 {
+        padding-bottom: 125%;
+        position: relative;
+        overflow: hidden;
+      }
+      .image-4-5 img,
+      .image-4-5 video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* Transisi untuk slide carousel */
+      .carousel-slide {
+        transition: opacity 0.5s ease-in-out; /* Transisi fade */
+      }
+      .carousel-slide.active {
+        opacity: 1;
+        z-index: 1;
+      }
+      .carousel-slide:not(.active) {
+        opacity: 0;
+        z-index: 0;
+      }
+      .carousel-indicator {
+        width: 10px;
+        height: 10px;
+        background-color: #d1d5db;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .carousel-indicator.active {
+        background-color: #ec4899;
+      }
+      /* Spinner sederhana */
+      .loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #ec4899; /* Pink */
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <header
+      class="bg-white shadow-md py-4 px-6 md:px-12 fixed w-full top-0 z-50"
+    >
+      <div class="container mx-auto flex justify-between items-center">
+        <a href="/" class="text-2xl md:text-3xl font-bold text-pink-600"
+          >NMStore</a
+        >
+        <nav class="hidden md:flex space-x-6 text-lg">
+          <a
+            href="/#home"
+            class="text-gray-700 hover:text-pink-600 transition duration-300"
+            >Home</a
+          >
+          <a
+            href="/#products"
+            class="text-gray-700 hover:text-pink-600 transition duration-300"
+            >Produk</a
+          >
+          <a
+            href="/#why-us"
+            class="text-gray-700 hover:text-pink-600 transition duration-300"
+            >Kenapa Kami</a
+          >
+          <a
+            href="/#contact"
+            class="text-gray-700 hover:text-pink-600 transition duration-300"
+            >Kontak</a
+          >
+        </nav>
+        <button
+          id="hamburger-menu"
+          class="md:hidden text-gray-700 hover:text-pink-600 focus:outline-none"
+        >
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+      <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 text-center">
+        <a
+          href="/#home"
+          class="block py-2 text-gray-700 hover:bg-pink-100 transition duration-300 rounded"
+          >Home</a
+        >
+        <a
+          href="/#products"
+          class="block py-2 text-gray-700 hover:bg-pink-100 transition duration-300 rounded"
+          >Produk</a
+        >
+        <a
+          href="/#why-us"
+          class="block py-2 text-gray-700 hover:bg-pink-100 transition duration-300 rounded"
+          >Kenapa Kami</a
+        >
+        <a
+          href="/#contact"
+          class="block py-2 text-gray-700 hover:bg-pink-100 transition duration-300 rounded"
+          >Kontak</a
+        >
+      </div>
+    </header>
+
+    <main class="pt-24 pb-16">
+      <div class="container mx-auto px-6">
+        <div
+          id="product-detail-container"
+          class="bg-white rounded-lg shadow-lg overflow-hidden md:flex md:items-start p-6 md:p-8"
+        >
+          <div class="w-full text-center">
+            <div class="loader"></div>
+            <p class="text-gray-600">Memuat detail produk...</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-10">
+      <div
+        class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left"
+      >
+        <div class="mb-6 md:mb-0">
+          <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="/#home"
+                class="hover:text-pink-400 transition duration-300"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="/#products"
+                class="hover:text-pink-400 transition duration-300"
+                >Produk</a
+              >
+            </li>
+            <li>
+              <a
+                href="/#why-us"
+                class="hover:text-pink-400 transition duration-300"
+                >Kenapa Kami</a
+              >
+            </li>
+            <li>
+              <a
+                href="/#contact"
+                class="hover:text-pink-400 transition duration-300"
+                >Kontak</a
+              >
+            </li>
+            <li>
+              <a
+                href="/admin"
+                class="hover:text-pink-400 transition duration-300"
+                >Admin Login</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="text-center">
+          <p>
+            &copy; <span id="current-year"></span> NMStore. All rights reserved.
+          </p>
+          <p class="text-sm mt-2">Dibuat dengan ❤️ untuk fashion Anda.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+
+      const hamburgerMenu = document.getElementById("hamburger-menu");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      hamburgerMenu.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+        });
+      });
+
+      const productDetailContainer = document.getElementById(
+        "product-detail-container"
+      );
+      let currentSlide = 0;
+      let productMedia = [];
+
+      async function fetchProductDetail() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id");
+
+        // Tampilkan spinner saat memuat detail produk
+        productDetailContainer.innerHTML = `
+          <div class="w-full text-center">
+            <div class="loader"></div>
+            <p class="text-gray-600">Memuat detail produk...</p>
+          </div>
+        `;
+
+        if (!productId) {
+          productDetailContainer.innerHTML =
+            '<p class="text-center text-red-500 w-full">ID produk tidak ditemukan di URL.</p>';
+          return;
+        }
+
+        try {
+          const response = await fetch("/api/products");
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const products = await response.json();
+          const product = products.find((p) => p.id === parseInt(productId));
+
+          if (product) {
+            productMedia = product.mediaUrls || [];
+            displayProductDetail(product);
+            document.title = `${product.name} - NMStore`;
+          } else {
+            productDetailContainer.innerHTML =
+              '<p class="text-center text-red-500 w-full">Produk tidak ditemukan.</p>';
+          }
+        } catch (error) {
+          console.error("Gagal mengambil detail produk:", error);
+          productDetailContainer.innerHTML =
+            '<p class="text-center text-red-500 w-full">Gagal memuat detail produk. Silakan coba lagi nanti.</p>';
+        }
+      }
+
+      function displayProductDetail(product) {
+        const whatsappLink = `https://wa.me/6281333455526?text=${encodeURIComponent(
+          `Saya ingin beli ${product.name}.`
+        )}`;
+
+        const mainMediaHTML =
+          productMedia.length > 0
+            ? productMedia
+                .map((url, index) => {
+                  const isVideo =
+                    url.endsWith(".mp4") ||
+                    url.endsWith(".webm") ||
+                    url.endsWith(".ogg");
+                  return `
+                        <div class="absolute inset-0 carousel-slide ${
+                          index === 0 ? "active" : ""
+                        }">
+                            ${
+                              isVideo
+                                ? `<video src="${url}" controls class="w-full h-full object-cover rounded-lg" playsinline loading="lazy"></video>`
+                                : `<img src="${url}" alt="${product.name}" class="w-full h-full object-cover rounded-lg" loading="lazy">`
+                            }
+                        </div>
+                    `;
+                })
+                .join("")
+            : `
+                    <div class="absolute inset-0 carousel-slide active">
+                        <img src="/images/placeholder.png" alt="Placeholder" class="w-full h-full object-cover rounded-lg" loading="lazy">
+                    </div>
+                `;
+
+        const slideButtonsHTML =
+          productMedia.length > 1
+            ? `
+                <button id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition z-10">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="next-slide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition z-10">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div id="carousel-indicators" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
+                    ${productMedia
+                      .map(
+                        (_, index) =>
+                          `<span class="carousel-indicator ${
+                            index === 0 ? "active" : ""
+                          }" data-index="${index}"></span>`
+                      )
+                      .join("")}
+                </div>
+            `
+            : "";
+
+        productDetailContainer.innerHTML = `
+                <div class="md:w-1/2 flex-shrink-0 mb-6 md:mb-0 md:mr-8">
+                    <div class="image-4-5 rounded-lg shadow-md bg-gray-200 relative">
+                        ${mainMediaHTML}
+                        ${slideButtonsHTML}
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex-grow">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">${product.name}</h1>
+                    <p class="text-pink-600 font-extrabold text-3xl mb-6">${product.price}</p>
+                    <a href="${whatsappLink}" target="_blank" class="inline-block bg-green-500 text-white font-semibold py-3 px-8 rounded-full hover:bg-green-600 transition duration-300 text-xl shadow-lg mb-8">
+                        <i class="fab fa-whatsapp mr-3"></i> Beli Sekarang
+                    </a>
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-3">Deskripsi Produk</h2>
+                    <p class="text-gray-700 leading-relaxed whitespace-pre-wrap">${product.description}</p>
+                </div>
+            `;
+
+        if (productMedia.length > 1) {
+          const slides =
+            productDetailContainer.querySelectorAll(".carousel-slide");
+          const indicators = productDetailContainer.querySelectorAll(
+            ".carousel-indicator"
+          );
+
+          function showSlide(index) {
+            slides.forEach((slide, i) => {
+              if (i === index) {
+                slide.classList.add("active");
+              } else {
+                slide.classList.remove("active");
+              }
+            });
+            indicators.forEach((indicator, i) => {
+              indicator.classList.toggle("active", i === index);
+            });
+            currentSlide = index;
+          }
+
+          document
+            .getElementById("prev-slide")
+            .addEventListener("click", () => {
+              const newIndex =
+                (currentSlide - 1 + productMedia.length) % productMedia.length;
+              showSlide(newIndex);
+            });
+
+          document
+            .getElementById("next-slide")
+            .addEventListener("click", () => {
+              const newIndex = (currentSlide + 1) % productMedia.length;
+              showSlide(newIndex);
+            });
+
+          indicators.forEach((indicator) => {
+            indicator.addEventListener("click", (e) => {
+              showSlide(parseInt(e.target.dataset.index));
+            });
+          });
+
+          showSlide(0);
+        }
+      }
+
+      fetchProductDetail();
+    </script>
+  </body>
+</html>

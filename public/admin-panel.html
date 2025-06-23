@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - NMStore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
+      }
+      .image-4-5 {
+        padding-bottom: 125%;
+        position: relative;
+        overflow: hidden;
+      }
+      .image-4-5 img,
+      .image-4-5 video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .modal-overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+      }
+      /* Spinner sederhana */
+      .loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #ec4899; /* Pink */
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      /* Animasi fade in untuk modal */
+      .modal-fade-enter-active, .modal-fade-leave-active {
+        transition: opacity 0.3s ease;
+      }
+      .modal-fade-enter, .modal-fade-leave-to /* .modal-fade-leave-active in <2.1.8 */ {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <header
+      class="bg-white shadow-md py-4 px-6 md:px-12 fixed w-full top-0 z-50"
+    >
+      <div class="container mx-auto flex justify-between items-center">
+        <a href="/" class="text-2xl md:text-3xl font-bold text-pink-600"
+          >NMStore Admin</a
+        >
+        <nav class="hidden md:flex space-x-6 text-lg">
+          <a
+            href="/"
+            class="text-gray-700 hover:text-pink-600 transition duration-300"
+            >Beranda Website</a
+          >
+          <button
+            id="logout-button"
+            class="bg-red-500 text-white font-semibold py-2 px-4 rounded hover:bg-red-600 transition duration-300"
+          >
+            Logout
+          </button>
+        </nav>
+        <button
+          id="hamburger-menu"
+          class="md:hidden text-gray-700 hover:text-pink-600 focus:outline-none"
+        >
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+      <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 text-center">
+        <a
+          href="/"
+          class="block py-2 text-gray-700 hover:bg-pink-100 transition duration-300 rounded"
+          >Beranda Website</a
+        >
+        <button
+          id="logout-button-mobile"
+          class="block w-full py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition duration-300"
+        >
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <main class="pt-24 pb-16">
+      <div class="container mx-auto px-6">
+        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">
+          Panel Admin
+        </h1>
+
+        <div class="mb-8 text-center">
+          <button
+            id="add-product-button"
+            class="bg-blue-600 text-white font-semibold py-3 px-8 rounded-full hover:bg-blue-700 transition duration-300 text-lg shadow-lg"
+          >
+            <i class="fas fa-plus-circle mr-2"></i> Tambah Produk Baru
+          </button>
+        </div>
+
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+          Daftar Produk
+        </h2>
+        <div
+          id="admin-product-list"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+        >
+          <div class="col-span-full text-center">
+            <div class="loader"></div>
+            <p class="text-gray-600">Memuat produk...</p>
+          </div>
+        </div>
+        <p id="product-list-message" class="text-center text-sm mt-4"></p>
+      </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-10">
+      <div
+        class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-center md:text-left"
+      >
+        <div class="mb-6 md:mb-0">
+          <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="/#home"
+                class="hover:text-pink-400 transition duration-300"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="/#products"
+                class="hover:text-pink-400 transition duration-300"
+                >Produk</a
+              >
+            </li>
+            <li>
+              <a
+                href="/#why-us"
+                class="hover:text-pink-400 transition duration-300"
+                >Kenapa Kami</a
+              >
+            </li>
+            <li>
+              <a
+                href="/#contact"
+                class="hover:text-pink-400 transition duration-300"
+                >Kontak</a
+              >
+            </li>
+            <li>
+              <a
+                href="/admin"
+                class="hover:text-pink-400 transition duration-300"
+                >Admin Login</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="text-center">
+          <p>
+            &copy; <span id="current-year"></span> NMStore. All rights reserved.
+          </p>
+          <p class="text-sm mt-2">Dibuat dengan ❤️ untuk fashion Anda.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="add-product-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modal-overlay modal-fade-enter-active"
+    >
+      <div class="bg-white p-8 rounded-lg shadow-xl max-w-lg w-full relative">
+        <button
+          id="close-modal"
+          class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl"
+        >
+          <i class="fas fa-times-circle"></i>
+        </button>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+          Tambah Produk Baru
+        </h2>
+        <form id="add-product-form" class="space-y-4">
+          <div>
+            <label
+              for="product-media"
+              class="block text-gray-700 text-sm font-semibold mb-2"
+              >Gambar/Video Produk (Rasio 4:5, Bisa Lebih Dari 1)</label
+            >
+            <input
+              type="file"
+              id="product-media"
+              name="productMedia[]"
+              accept="image/*,video/*"
+              multiple
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-200"
+            />
+            <p class="text-sm text-gray-500 mt-1">
+              Pilih satu atau beberapa file gambar atau video (maks 10 file, maks 10MB per file).
+            </p>
+          </div>
+          <div>
+            <label
+              for="product-name"
+              class="block text-gray-700 text-sm font-semibold mb-2"
+              >Nama Produk</label
+            >
+            <input
+              type="text"
+              id="product-name"
+              name="name"
+              placeholder="Nama Produk"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-200"
+            />
+          </div>
+          <div>
+            <label
+              for="product-price"
+              class="block text-gray-700 text-sm font-semibold mb-2"
+              >Harga Produk (misal: 100.000-150.000)</label
+            >
+            <input
+              type="text"
+              id="product-price"
+              name="price"
+              placeholder="Contoh: 100.000-150.000"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-200"
+            />
+          </div>
+          <div>
+            <label
+              for="product-description"
+              class="block text-gray-700 text-sm font-semibold mb-2"
+              >Deskripsi Produk</label
+            >
+            <textarea
+              id="product-description"
+              name="description"
+              rows="5"
+              placeholder="Deskripsi lengkap produk..."
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-200 resize-y"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            id="submit-product-button"
+            class="w-full bg-pink-600 text-white font-semibold py-3 rounded-md hover:bg-pink-700 transition duration-300 transform hover:scale-105"
+          >
+            <i class="fas fa-upload mr-2"></i> Simpan Produk
+          </button>
+          <p id="add-product-message" class="text-sm mt-4 text-center"></p>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+
+      const hamburgerMenu = document.getElementById("hamburger-menu");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      hamburgerMenu.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+        });
+      });
+
+      const logoutButton = document.getElementById("logout-button");
+      const logoutButtonMobile = document.getElementById(
+        "logout-button-mobile"
+      );
+
+      async function performLogout() {
+        try {
+          const response = await fetch("/api/admin/logout", { method: "POST" });
+          const data = await response.json();
+          if (data.success) {
+            alert(data.message);
+            window.location.href = "/admin";
+          } else {
+            alert(data.message || "Gagal logout.");
+          }
+        } catch (error) {
+          console.error("Error saat logout:", error);
+          alert("Terjadi kesalahan saat logout.");
+        }
+      }
+
+      logoutButton.addEventListener("click", performLogout);
+      logoutButtonMobile.addEventListener("click", performLogout);
+
+      const addProductButton = document.getElementById("add-product-button");
+      const addProductModal = document.getElementById("add-product-modal");
+      const closeModalButton = document.getElementById("close-modal");
+      const addProductForm = document.getElementById("add-product-form");
+      const addProductMessage = document.getElementById("add-product-message");
+      const adminProductList = document.getElementById("admin-product-list");
+      const productListMessage = document.getElementById(
+        "product-list-message"
+      );
+      const submitProductButton = document.getElementById("submit-product-button");
+
+      addProductButton.addEventListener("click", () => {
+        addProductModal.classList.remove("hidden");
+        addProductModal.classList.remove("modal-fade-leave-to"); // Pastikan tidak ada class transisi keluar
+        addProductModal.classList.add("modal-fade-enter-active"); // Terapkan transisi masuk
+        addProductMessage.textContent = "";
+        addProductMessage.className = "text-sm mt-4 text-center"; // Reset class pesan
+        addProductForm.reset();
+        resetFormValidationStyles(); // Reset style validasi
+      });
+
+      closeModalButton.addEventListener("click", () => {
+        addProductModal.classList.remove("modal-fade-enter-active");
+        addProductModal.classList.add("modal-fade-leave-to"); // Terapkan transisi keluar
+        setTimeout(() => {
+            addProductModal.classList.add("hidden");
+        }, 300); // Sesuai durasi transisi CSS
+      });
+
+      addProductModal.addEventListener("click", (e) => {
+        if (e.target === addProductModal) {
+            addProductModal.classList.remove("modal-fade-enter-active");
+            addProductModal.classList.add("modal-fade-leave-to");
+            setTimeout(() => {
+                addProductModal.classList.add("hidden");
+            }, 300);
+        }
+      });
+
+      // Fungsi untuk mereset gaya validasi formulir
+      function resetFormValidationStyles() {
+        const inputs = addProductForm.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+          input.classList.remove('border-red-500', 'focus:ring-red-500');
+          input.classList.add('border-gray-300', 'focus:ring-pink-500');
+        });
+      }
+
+      // Fungsi untuk menandai input yang tidak valid
+      function markInvalid(inputElement, message) {
+        inputElement.classList.remove('border-gray-300', 'focus:ring-pink-500');
+        inputElement.classList.add('border-red-500', 'focus:ring-red-500');
+        addProductMessage.textContent = message;
+        addProductMessage.className = "text-sm mt-4 text-center text-red-600";
+      }
+
+      addProductForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Reset pesan dan gaya validasi sebelumnya
+        addProductMessage.textContent = "";
+        resetFormValidationStyles();
+        submitProductButton.disabled = true; // Nonaktifkan tombol saat submit
+        submitProductButton.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Menyimpan...'; // Ganti teks tombol
+
+        const formData = new FormData(addProductForm);
+
+        const productName = document.getElementById("product-name");
+        const productPrice = document.getElementById("product-price");
+        const productDescription = document.getElementById("product-description");
+        const productMediaFiles = document.getElementById("product-media").files;
+
+        // Validasi Sisi Klien
+        if (productName.value.trim() === '') {
+            markInvalid(productName, "Nama produk tidak boleh kosong.");
+            submitProductButton.disabled = false;
+            submitProductButton.innerHTML = '<i class="fas fa-upload mr-2"></i> Simpan Produk';
+            return;
+        }
+        if (productPrice.value.trim() === '') {
+            markInvalid(productPrice, "Harga produk tidak boleh kosong.");
+            submitProductButton.disabled = false;
+            submitProductButton.innerHTML = '<i class="fas fa-upload mr-2"></i> Simpan Produk';
+            return;
+        }
+        if (productDescription.value.trim() === '') {
+            markInvalid(productDescription, "Deskripsi produk tidak boleh kosong.");
+            submitProductButton.disabled = false;
+            submitProductButton.innerHTML = '<i class="fas fa-upload mr-2"></i> Simpan Produk';
+            return;
+        }
+        if (productMediaFiles.length === 0) {
+            markInvalid(document.getElementById("product-media"), "Harap pilih setidaknya satu gambar atau video.");
+            submitProductButton.disabled = false;
+            submitProductButton.innerHTML = '<i class="fas fa-upload mr-2"></i> Simpan Produk';
+            return;
+        }
+        if (productMediaFiles.length > 10) {
+            markInvalid(document.getElementById("product-media"), "Maksimal 10 file yang diizinkan.");
+            submitProductButton.disabled = false;
+            submitProductButton.innerHTML = '<i class="fas fa-upload mr-2"></i> Simpan Produk';
+            return;
+        }
+
+        // Tambahan validasi ukuran file per file
+        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+        for (let i = 0; i < productMediaFiles.length; i++) {
+            if (productMediaFiles[i].size > MAX_FILE_SIZE) {
+                markInvalid(document.getElementById("product-media"), `Ukuran file "${productMediaFiles[i].name}" terlalu besar. Maksimal 10MB.`);
+                submitProductButton.disabled = false;
+                submitProductButton.innerHTML = '<i class="fas fa-upload mr-2"></i> Simpan Produk';
+                return;
+            }
+        }
+
+
+        try {
+          const response = await fetch("/api/products", {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            addProductMessage.textContent = "Produk berhasil ditambahkan!";
+            addProductMessage.className =
+              "text-sm mt-4 text-center text-green-600";
+            addProductForm.reset();
+            resetFormValidationStyles(); // Pastikan style validasi direset
+            fetchProductsForAdmin();
+            setTimeout(() => {
+              addProductModal.classList.remove("modal-fade-enter-active");
+              addProductModal.classList.add("modal-fade-leave-to");
+              setTimeout(() => {
+                addProductModal.classList.add("hidden");
+              }, 300);
+            }, 1500);
+          } else {
+            addProductMessage.textContent =
+              data.message || "Gagal menambahkan produk.";
+            addProductMessage.className =
+              "text-sm mt-4 text-center text-red-600";
+          }
+        } catch (error) {
+          console.error("Error adding product:", error);
+          addProductMessage.textContent =
+            "Terjadi kesalahan saat menambahkan produk.";
+          addProductMessage.className = "text-sm mt-4 text-center text-red-600";
+        } finally {
+            submitProductButton.disabled = false; // Aktifkan kembali tombol
+            submitProductButton.innerHTML = '<i class="fas fa-upload mr-2"></i> Simpan Produk'; // Kembalikan teks tombol
+        }
+      });
+
+      async function fetchProductsForAdmin() {
+        adminProductList.innerHTML = `
+            <div class="col-span-full text-center">
+                <div class="loader"></div>
+                <p class="text-gray-600">Memuat produk...</p>
+            </div>
+        `; // Menampilkan spinner saat memuat
+        productListMessage.textContent = "";
+
+        try {
+          const response = await fetch("/api/products");
+          if (!response.ok) {
+            if (response.status === 401) {
+              alert(
+                "Sesi Anda telah berakhir atau Anda belum login. Silakan login kembali."
+              );
+              window.location.href = "/admin";
+              return;
+            }
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const products = await response.json();
+
+          if (products.length === 0) {
+            adminProductList.innerHTML =
+              '<p class="col-span-full text-center text-gray-600">Belum ada produk yang ditambahkan.</p>';
+            return;
+          }
+          displayAdminProducts(products);
+        } catch (error) {
+          console.error("Gagal mengambil produk untuk admin:", error);
+          adminProductList.innerHTML =
+            '<p class="col-span-full text-center text-red-500">Gagal memuat produk. Silakan coba lagi.</p>';
+        }
+      }
+
+      function displayAdminProducts(products) {
+        adminProductList.innerHTML = "";
+        products.forEach((product) => {
+          const firstMediaUrl =
+            product.mediaUrls && product.mediaUrls.length > 0
+              ? product.mediaUrls[0]
+              : "/images/placeholder.png";
+          const isVideo =
+            firstMediaUrl.endsWith(".mp4") ||
+            firstMediaUrl.endsWith(".webm") ||
+            firstMediaUrl.endsWith(".ogg");
+
+          const productCard = `
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                <div class="image-4-5 bg-gray-200">
+                    ${
+                      isVideo
+                        ? `<video src="${firstMediaUrl}" class="w-full h-full object-cover" muted loop playsinline loading="lazy"></video>`
+                        : `<img src="${firstMediaUrl}" alt="${product.name}" class="w-full h-full object-cover" loading="lazy">`
+                    }
+                </div>
+                <div class="p-5 flex-grow">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 truncate">${
+                      product.name
+                    }</h3>
+                    <p class="text-pink-600 font-bold text-lg">${
+                      product.price
+                    }</p>
+                </div>
+                <div class="p-5 border-t border-gray-100 text-center">
+                    <button data-product-id="${
+                      product.id
+                    }" class="delete-product-button bg-red-500 text-white font-semibold py-2 px-6 rounded-full hover:bg-red-600 transition duration-300">
+                        <i class="fas fa-trash-alt mr-2"></i> Hapus
+                    </button>
+                </div>
+            </div>
+        `;
+          adminProductList.insertAdjacentHTML("beforeend", productCard);
+        });
+
+        document
+          .querySelectorAll(".delete-product-button")
+          .forEach((button) => {
+            button.addEventListener("click", handleDeleteProduct);
+          });
+      }
+
+      async function handleDeleteProduct(e) {
+        const productId = e.currentTarget.dataset.productId;
+        if (
+          !confirm(
+            `Apakah Anda yakin ingin menghapus produk ini (ID: ${productId}) beserta semua media terkait?`
+          )
+        ) {
+          return;
+        }
+
+        const button = e.currentTarget;
+        button.disabled = true; // Nonaktifkan tombol saat menghapus
+        button.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Menghapus...'; // Ganti teks tombol
+
+        try {
+          const response = await fetch(`/api/products/${productId}`, {
+            method: "DELETE",
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            alert(data.message || "Produk berhasil dihapus.");
+            fetchProductsForAdmin();
+          } else {
+            alert(data.message || "Gagal menghapus produk.");
+          }
+        } catch (error) {
+          console.error("Error deleting product:", error);
+          alert("Terjadi kesalahan saat menghapus produk.");
+        } finally {
+            button.disabled = false; // Aktifkan kembali tombol
+            button.innerHTML = '<i class="fas fa-trash-alt mr-2"></i> Hapus'; // Kembalikan teks tombol
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const response = await fetch("/api/admin/check-auth");
+          if (!response.ok) {
+            alert("Anda tidak memiliki akses ke halaman ini. Silakan login.");
+            window.location.href = "/admin";
+            return;
+          }
+          fetchProductsForAdmin();
+        } catch (error) {
+          console.error("Error checking authentication:", error);
+          alert("Terjadi kesalahan saat memeriksa sesi. Silakan coba lagi.");
+          window.location.href = "/admin";
+        }
+      });
+    </script>
+  </body>
+</html>
